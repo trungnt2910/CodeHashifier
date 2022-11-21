@@ -1,0 +1,86 @@
+﻿<Page
+    x:Class="CodeHashifier.Uno.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CodeHashifier.Uno"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <ScrollViewer>
+        <StackPanel>
+            <TextBlock Style="{StaticResource HeaderTextBlockStyle}" Text="CodeHashifier - C++ code obfuscator"/>
+            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="Ever found some guy nagging you to send the code for a problem he never gave a second of thought? Or some bloke too lazy to finish the console application for his weekend assignment? This tool is for you."/>
+            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text=""/>
+            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="CodeHashifier mangles your C++ code by using random #define hashes, concealing its idea from the readers while still maintaining its validity to compilers."/>
+            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text=""/>
+            <Grid x:Name="CodeHashifierUI" BorderBrush="Black" BorderThickness="2" RowSpacing="10" ColumnSpacing="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition MinHeight="300"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" 
+                            Grid.Row="0" 
+                            Grid.Column="0" 
+                            Grid.ColumnSpan="2"
+                            Spacing="2">
+                    <Button Content="File">
+                        <Button.Flyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem x:Name="FileMenuOpen" Text="Open..." Click="FileMenuOpen_Click">
+                                    <MenuFlyoutItem.KeyboardAccelerators>
+                                        <KeyboardAccelerator Key="O" Modifiers="Control"/>
+                                    </MenuFlyoutItem.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem x:Name="FileMenuSave" Text="Save..." Click="FileMenuSave_Click">
+                                    <MenuFlyoutItem.KeyboardAccelerators>
+                                        <KeyboardAccelerator Key="S" Modifiers="Control"/>
+                                    </MenuFlyoutItem.KeyboardAccelerators>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </Button.Flyout>
+                    </Button>
+                    <Button x:Name="AboutButton" Content="About" Click="AboutButton_Click"/>
+                </StackPanel>
+                <TextBox x:Name="CodeInput"
+                         Grid.Row="1"
+                         Grid.Column="0"
+                         TabIndex="0"
+                         Height="300"
+                         AcceptsReturn="True"
+                         FontFamily="Consolas"
+                         IsSpellCheckEnabled="False"
+                         VerticalContentAlignment="Top"
+                         PlaceholderText="//Your code here..."/>
+                <TextBox x:Name="CodeOutput"
+                         Grid.Row="1"
+                         Grid.Column="1"
+                         IsReadOnly="True"
+                         Height="300"
+                         AcceptsReturn="True"
+                         FontFamily="Consolas"
+                         VerticalContentAlignment="Top"
+                         PlaceholderText="//H@sh1f1ed c0de here..."/>
+                <Button x:Name="HashItButton"
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Style="{StaticResource AccentButtonStyle}"
+                        Content="Hash it!"
+                        HorizontalAlignment="Stretch"
+                        Click="HashItButton_Click"/>
+                <Button x:Name="CopyToClipboardButton"
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Content="Copy output to Clipboard"
+                        HorizontalAlignment="Stretch"
+                        Click="CopyToClipboardButton_Click"/>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

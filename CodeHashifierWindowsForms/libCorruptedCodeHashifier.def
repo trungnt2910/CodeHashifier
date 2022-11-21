@@ -1,0 +1,3 @@
+EXPORTS
+    GetVersion @1
+    Hash @2

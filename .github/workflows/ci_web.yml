@@ -1,0 +1,55 @@
+name: 'Build and publish web application'
+on:
+  create:
+    branches:
+      - release/**
+  push:
+    branches:
+    - master
+    - dev/**
+    paths:
+    - CodeHashifier.Uno/CodeHashifier.Uno.Wasm/**
+    - CodeHashifier.Uno/CodeHashifier.Shared/**
+    - .github/workflows/**
+  pull_request:
+    branches:
+    - master
+    paths:
+    - CodeHashifier.Uno/CodeHashifier.Uno.Wasm/**
+    - CodeHashifier.Uno/CodeHashifier.Shared/**
+    - .github/workflows/**
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build app (WebAssembly)
+    runs-on: windows-latest
+    steps:
+        # Checkout the code
+        - uses: actions/checkout@v2
+
+        # Install .NET Core SDK
+        - name: Setup .NET SDK
+          uses: actions/setup-dotnet@v1
+          with:
+            dotnet-version: '7.0.x'
+
+        # Generate the website
+        - name: Publish
+          run: dotnet publish CodeHashifier.Uno/CodeHashifier.Uno.Wasm/CodeHashifier.Uno.Wasm.csproj --configuration Release
+
+        # Publish the website
+        - name: GitHub Pages action
+          if: ${{ github.ref == 'refs/heads/master' }} # Publish only when the push is on master
+          uses: peaceiris/actions-gh-pages@v3.6.1
+          with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            publish_branch: gh-pages
+            publish_dir: CodeHashifier.Uno/CodeHashifier.Uno.Wasm/bin/Release/net7.0/publish
+            allow_empty_commit: false
+            keep_files: false
+            force_orphan: true
+            # TODO uncomment the following line if you have a custom domain name
+            # cname: demo.meziantou.net

@@ -1,0 +1,4 @@
+all:
+	buildCodeHashifierUI.cmd
+clean:
+	del /S /Q CodeHashifierUI.exe >nul 2>&1
